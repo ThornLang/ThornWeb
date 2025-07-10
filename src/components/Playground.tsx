@@ -30,13 +30,18 @@ Fibonacci(10) = 55`);
 
   const runCode = async () => {
     setIsRunning(true);
-    // Simulate compilation and execution
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setOutput(`Hello, World!
-Doubled: [2, 4, 6, 8, 10]
-Fibonacci(10) = 55
+    // TODO: Implement real Thorn code execution
+    // For now, just show a coming soon message
+    await new Promise(resolve => setTimeout(resolve, 500));
+    setOutput(`⚠️ Playground execution coming soon!
 
-Program executed successfully in 0.023s`);
+The Thorn playground is currently under development.
+For now, you can:
+- Write and edit Thorn code
+- Copy code examples
+- Visit our GitHub to run Thorn locally
+
+Stay tuned for live code execution!`);
     setIsRunning(false);
   };
 

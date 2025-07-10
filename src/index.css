@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Angelos';
-  src: url('/fonts/Angelos.ttf') format('truetype');
+  src: url('./fonts/Angelos.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
