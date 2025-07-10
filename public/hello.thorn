@@ -1,0 +1,6 @@
+$ hello(name: string): void {
+    print("Hello, " + name + "!");
+}
+
+hello("World")
+hello("Thorn")

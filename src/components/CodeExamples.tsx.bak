@@ -1,0 +1,124 @@
+import React, { useState } from 'react';
+import { Copy, Check } from 'lucide-react';
+
+const CodeExamples: React.FC = () => {
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  const examples = [
+    {
+      title: 'Hello World',
+      code: `fn main() {
+  println("Hello, World!")
+}`,
+      description: 'Simple and clean syntax for getting started'
+    },
+    {
+      title: 'Data Structures',
+      code: `struct Person {
+  name: String,
+  age: Int,
+  email: Option<String>
+}
+
+fn greet(person: Person) {
+  match person.email {
+    Some(email) -> println("Hello {person.name}! ({email})")
+    None -> println("Hello {person.name}!")
+  }
+}`,
+      description: 'Powerful structs with pattern matching'
+    },
+    {
+      title: 'Async/Await',
+      code: `async fn fetch_user(id: Int) -> Result<User, Error> {
+  let response = await http::get("/users/{id}")
+  match response {
+    Ok(data) -> Ok(data.parse<User>()?)
+    Err(e) -> Err(e)
+  }
+}`,
+      description: 'Built-in async support with error handling'
+    },
+    {
+      title: 'Generics',
+      code: `fn map<T, U>(list: List<T>, f: fn(T) -> U) -> List<U> {
+  let mut result = List::new()
+  for item in list {
+    result.push(f(item))
+  }
+  result
+}
+
+let numbers = [1, 2, 3, 4, 5]
+let doubled = map(numbers, |x| x * 2)`,
+      description: 'Type-safe generics with higher-order functions'
+    }
+  ];
+
+  const copyToClipboard = async (code: string, index: number) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy code:', err);
+    }
+  };
+
+  return (
+    <section className="py-20 bg-gray-50 dark:bg-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            See Thorn in Action
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Explore the clean syntax and powerful features that make Thorn a joy to work with.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {examples.map((example, index) => (
+            <div key={index} className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {example.title}
+                  </h3>
+                  <button
+                    onClick={() => copyToClipboard(example.code, index)}
+                    className="flex items-center space-x-2 px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200"
+                  >
+                    {copiedIndex === index ? (
+                      <>
+                        <Check size={16} />
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={16} />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  {example.description}
+                </p>
+              </div>
+              <div className="p-6">
+                <pre className="text-sm overflow-x-auto">
+                  <code className="text-gray-800 dark:text-gray-200 font-mono">
+                    {example.code}
+                  </code>
+                </pre>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CodeExamples;
